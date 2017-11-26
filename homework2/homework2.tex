@@ -1,0 +1,58 @@
+\documentclass[UTF8]{article}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{CTEX}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\begin{document}
+	利用本章节学习的U统计量构造一个统计分析案例，可以参照如下结构：
+	\section{统计模型及具体问题}
+	在现实生活生经常会遇到这样的问题：金融行业的收入是否是传统行业的两倍，上海地区的人均收入是否是西藏地区的五倍。
+	
+	将这些问题抽象为统计问题，也就是比较两个总体$(F,G)$的均值$(\mu_1,\mu_2)$的比值$\frac{\mu_1}{\mu_2}$是否是一个给定的值$c$，这是一个典型的假设检验的问题：
+	
+	$$H_0:\frac{\mu_1}{\mu_2}=c \qquad vs\qquad H_1:\frac{\mu_1}{\mu_2}\neq c$$
+	
+	本次作业将使用$U$统计量构造该假设检验的统计量并进行理论的推到和数据的模拟。
+	\section{统计方法及理论}
+	设$X_1,...,X_{n1}$为独立同分布于总体$F$的样本，同理$Y_1,...,Y_{n2}$为独立同分布于总体$G$的样本，即：
+	$$X_1,\cdots,X_{n1}\quad i.i.d \sim F$$
+	$$Y_1,\cdots,Y_{n2}\quad i.i.d \sim G$$
+	对于假设检验问题
+	$$H_0:\frac{\mu_1}{\mu_2}=c \qquad vs\qquad H_1:\frac{\mu_1}{\mu_2}\neq c$$
+	构造核函数
+	$$\phi(X_i, Y_j)=\frac{X_i}{Y_j}$$
+	易知
+	$$E[\phi(X_i, Y_j)]=E[\frac{X_i}{Y_j}]=\frac{E[X_i]}{E[Y_j]}=\frac{\mu_1}{\mu_2}$$
+	因此$\phi(X_i, Y_j)=\frac{X_i}{Y_j}$是$\frac{\mu_1}{\mu_2}$的一个无偏估计，阶为$(1, 1)$，根据此核函数构造$U$统计量为
+		$$U_{n_1,n_2}=\frac{1}{n_1n_2}\sum_{i=1}^{n_1}\sum_{j=1}^{n_2}\phi(X_i, Y_j)=\frac{1}{n_1n_2}\sum_{i=1}^{n_1}\sum_{j=1}^{n_2}\frac{X_i}{Y_j}$$
+	定义
+	$$\sigma^2_{10} := Cov(\phi(X_1,Y_1),\phi(X_1,Y^*_1))=Cov(\frac{X_1}{Y_1},\frac{X_1}{Y^*_1})
+	=E[\frac{{X_1}^2}{Y_1Y^*_1}]-\frac{{\mu_1}^2}{{\mu_2}^2}=\frac{Var(X_1)}{{\mu_2}^2}$$
+	$$\sigma^2_{01} := Cov(\phi(X_1,Y_1),\phi(X^*_1,Y_1))=E[\frac{X_1X^*_1}{{Y_1}^2}]-\frac{{\mu_1}^2}{{\mu_2}^2}
+	={\mu_1}^2(\frac1{E[{Y_1}^2]}-\frac1{{\mu_2}^2})$$
+	则根据$U$统计量的性质有
+	$$\sqrt{n_1+n_2}(U_{n_1,n_2}-\frac{\mu_1}{\mu_2})\rightarrow N(0,\sigma^2)$$
+	其中
+	$$\sigma^2=\frac{{m_1}^2}{p}\sigma^2_{10}+\frac{{m_2}^2}{1-p}\sigma^2_{01}
+	=\frac1{p}\sigma^2_{10}+\frac1{1-p}\sigma^2_{01}, \frac{n_1}{n_1+n_2}\rightarrow p$$
+	为此需要构造$\sigma^2_{10}$和$\sigma^2_{01}$的渐近估计。
+	
+	根据$Var(X_1)$的估计为$\phi(X_1, X_2)=\frac1{2}(X_1-X_2)^2$可得，$\sigma^2_{10}$的一个$U$统计量核函数为
+	$$\phi(X_1, X_2,Y_1,Y_2) = \frac{(X_1-X_2)^2}{2Y_1Y_2}$$
+	同理可得$\sigma^2_{01}$的一个$U$统计量核函数为
+	$$\phi(X_1,Y_1,Y_2) = X_1X_2(\frac1{})$$
+	\section{数据模拟}：在构造的数据上对所用方法进行模拟，展示出所用方法的有
+	效性以及优缺点分析。如果有可能，可以结合经典的方法，把新的方法
+	和以前放到一起进行比较。
+	\section{实际数据分析}：把方法应用到一个具体的实际数据上，展示方法的实际
+	效果。
+\end{document}
+
+
+
